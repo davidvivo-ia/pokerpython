@@ -96,10 +96,41 @@ def nombre_mano(cartas):
     return NOMBRES_MANO[rango]
 
 
-def mostrar_mano(cartas, oculta=False):
+def render_carta(carta=None, oculta=False):
+    """Devuelve una lista de 7 lineas con la carta dibujada en ASCII."""
     if oculta:
-        return " ".join(["[??]" for _ in cartas])
-    return " ".join([f"[{c}]" for c in cartas])
+        return [
+            "┌─────────┐",
+            "│▚▚▚▚▚▚▚▚▚│",
+            "│▚▚▚▚▚▚▚▚▚│",
+            "│▚▚▚▚▚▚▚▚▚│",
+            "│▚▚▚▚▚▚▚▚▚│",
+            "│▚▚▚▚▚▚▚▚▚│",
+            "└─────────┘",
+        ]
+    v = carta.valor
+    s = SIMBOLOS[carta.palo]
+    izq = v.ljust(2)
+    der = v.rjust(2)
+    return [
+        "┌─────────┐",
+        f"│{izq}       │",
+        "│         │",
+        f"│    {s}    │",
+        "│         │",
+        f"│       {der}│",
+        "└─────────┘",
+    ]
+
+
+def mostrar_mano(cartas, oculta=False, indices=False):
+    filas = [render_carta(c, oculta=oculta) for c in cartas]
+    lineas = ["  ".join(fila[i] for fila in filas) for i in range(7)]
+    salida = "\n".join(lineas)
+    if indices and not oculta:
+        etiquetas = "  ".join(f"    ({i+1})    " for i in range(len(cartas)))
+        salida += "\n" + etiquetas
+    return salida
 
 
 def pedir_apuesta(jugador, fichas, apuesta_actual, ya_apostado):
@@ -202,8 +233,9 @@ def ronda_apuestas(humano, cpu, bote, mano_humano, mano_cpu, ciega=2):
 
 
 def descarte_humano(mano, mazo):
-    print(f"\nTu mano: {mostrar_mano(mano)}")
-    print("Indices de cartas a descartar (1-5), separados por espacio. Enter para no descartar.")
+    print("\nTu mano:")
+    print(mostrar_mano(mano, indices=True))
+    print("\nIndices de cartas a descartar (1-5), separados por espacio. Enter para no descartar.")
     while True:
         entrada = input("> ").strip()
         if not entrada:
@@ -254,8 +286,10 @@ def jugar_ronda(humano, cpu):
     mano_cpu = mazo.repartir(5)
     bote = 0
 
-    print(f"\nTu mano: {mostrar_mano(mano_humano)}")
-    print(f"Mano CPU: {mostrar_mano(mano_cpu, oculta=True)}")
+    print("\nMano CPU:")
+    print(mostrar_mano(mano_cpu, oculta=True))
+    print("\nTu mano:")
+    print(mostrar_mano(mano_humano))
 
     bote, ganador, _ = ronda_apuestas(humano, cpu, bote, mano_humano, mano_cpu)
     if ganador:
@@ -267,7 +301,8 @@ def jugar_ronda(humano, cpu):
     mano_humano = descarte_humano(mano_humano, mazo)
     mano_cpu = descarte_cpu(mano_cpu, mazo)
 
-    print(f"\nTu nueva mano: {mostrar_mano(mano_humano)}")
+    print("\nTu nueva mano:")
+    print(mostrar_mano(mano_humano))
 
     print("\n--- Segunda ronda de apuestas ---")
     bote, ganador, _ = ronda_apuestas(humano, cpu, bote, mano_humano, mano_cpu)
@@ -277,8 +312,10 @@ def jugar_ronda(humano, cpu):
         return
 
     print("\n--- Showdown ---")
-    print(f"Tu mano:  {mostrar_mano(mano_humano)}  -> {nombre_mano(mano_humano)}")
-    print(f"Mano CPU: {mostrar_mano(mano_cpu)}  -> {nombre_mano(mano_cpu)}")
+    print(f"\nMano CPU ({nombre_mano(mano_cpu)}):")
+    print(mostrar_mano(mano_cpu))
+    print(f"\nTu mano ({nombre_mano(mano_humano)}):")
+    print(mostrar_mano(mano_humano))
 
     eval_h = evaluar_mano(mano_humano)
     eval_c = evaluar_mano(mano_cpu)
