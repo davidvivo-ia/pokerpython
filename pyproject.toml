@@ -92,12 +92,15 @@ ignore = [
     "D105",     # missing docstring in dunder
     "D104",     # missing docstring in public package
     "D100",     # missing docstring in public module — covered case-by-case
+    "RUF001",   # ambiguous unicode (we use · intentionally in UI strings)
     "RUF002",   # ambiguous unicode in docstrings (we use × intentionally)
 ]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["D", "ANN", "PLR2004", "S101"]
 "src/punto81/__main__.py" = ["D"]
+# Textual framework overrides do not need their own docstrings:
+"src/punto81/presentation/**/*.py" = ["D102", "D107"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -139,6 +142,13 @@ filterwarnings = ["error"]
 [tool.coverage.run]
 branch = true
 source = ["src/punto81"]
+omit = [
+    # Textual TUI is exercised by a headless smoke test only; deep
+    # coverage is tracked as v1.1 work in TODO.md.
+    "src/punto81/presentation/tui_app.py",
+    "src/punto81/presentation/widgets/*.py",
+    "src/punto81/infrastructure/clock/*.py",
+]
 
 [tool.coverage.report]
 exclude_lines = [

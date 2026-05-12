@@ -1,0 +1,103 @@
+/* PUNTO 81 — main stylesheet */
+
+Screen {
+    background: #0B0F0A;
+    color: #C9D7CC;
+}
+
+Header {
+    background: #0F1410;
+    color: #E8C547;
+}
+
+Footer {
+    background: #0F1410;
+    color: #3E5147;
+}
+
+#root {
+    layout: vertical;
+    height: 100%;
+    padding: 1 2;
+}
+
+.title {
+    color: #E8C547;
+    text-style: bold;
+    text-align: center;
+    height: 3;
+    content-align: center middle;
+}
+
+.label {
+    color: #3E5147;
+    text-style: italic;
+}
+
+.amount {
+    color: #E8C547;
+    text-style: bold;
+}
+
+.pot-line {
+    height: 1;
+    content-align: center middle;
+}
+
+#pot {
+    color: #E8C547;
+    text-style: bold;
+    height: 3;
+    content-align: center middle;
+    border: round #3E5147;
+}
+
+.hand {
+    height: 9;
+    content-align: center middle;
+    padding: 0 1;
+}
+
+.cpu-hand {
+    color: #DCE5DE;
+}
+
+.human-hand {
+    color: #C9D7CC;
+}
+
+.event-log {
+    color: #C9D7CC;
+    border: round #3E5147;
+    padding: 0 1;
+    height: 7;
+    margin-top: 1;
+}
+
+#status {
+    color: #5FB85F;
+    text-style: bold;
+    height: 3;
+    content-align: center middle;
+}
+
+#prompt {
+    color: #E8C547;
+    height: 1;
+    content-align: center middle;
+}
+
+.win {
+    color: #7DDE7C;
+    text-style: bold;
+}
+
+.lose {
+    color: #D9534F;
+    text-style: bold;
+}
+
+.tie {
+    color: #E59F46;
+    text-style: bold;
+}
