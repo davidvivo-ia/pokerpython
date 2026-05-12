@@ -5,7 +5,7 @@ versionado [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
-## [1.0.0] — 2026-05-12 *(WIP)*
+## [1.0.0] — 2026-05-12
 
 Reconstrucción 2026 de POKER (Steve North, 1978) como TUI Textual.
 
